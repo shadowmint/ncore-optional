@@ -1,0 +1,22 @@
+{
+  "name": "NCore.Optional",
+  "version": "1.0.0",
+  "description": "A simple optional type for .Net core",
+  "main": "index.js",
+  "files": [
+    "lib",
+    "scripts"
+  ],
+  "scripts": {
+    "test": "dotnet build /t:restore && dotnet test ./NCore.OptionalTests/NCore.OptionalTests.csproj",
+    "build": "dotnet clean && dotnet build /t:restore && dotnet pack --include-symbols --include-source && rm -f lib/*.nupkg && find NCore.Optional/* -name *.nupkg -exec cp {} lib \\;",
+    "demo": "cd NCore.OptionalDemo && dotnet run",
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mkdirp": "^0.5.1",
+    "ncp": "^2.0.0"
+  }
+}
