@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using NCore.Optional;
-using NCore.OptionalTests.Fixtures;
+using NCore.Optional.Test.Fixtures;
 using Xunit;
 
-namespace NCore.OptionalTests
+namespace NCore.Optional.Test
 {
   public class OptionTests
   {
@@ -30,6 +29,7 @@ namespace NCore.OptionalTests
       {
         x = instance.Value.Unwrap(x);
       }
+
       Assert.Equal("Hello", x);
     }
 
@@ -45,6 +45,7 @@ namespace NCore.OptionalTests
           Value = Option.Some("Some value")
         });
       }
+
       foreach (var testType in collection.Where(i => i.Id % 3 == 0))
       {
         testType.Recursive = Option.Some(new TestType()
@@ -56,11 +57,13 @@ namespace NCore.OptionalTests
       var matches = collection
         .Where(i => i.Recursive.Unwrap(() => new TestType()).Value.Some)
         .Select(i => i.Recursive.Unwrap(() => new TestType()).Value.Unwrap("Invalid"));
-      Assert.Equal(string.Join(" ", matches), "Hi-0 Hi-3 Hi-6 Hi-9");
+      
+      Assert.Equal("Hi-0 Hi-3 Hi-6 Hi-9", string.Join(" ", matches));
 
       var parents = collection
         .Where(i => i.Recursive.Unwrap(() => new TestType()).Value.Unwrap("").StartsWith("Hi"));
-      Assert.Equal(string.Join(" ", parents), "0:Some value 3:Some value 6:Some value 9:Some value");
+      
+      Assert.Equal("0:Some value 3:Some value 6:Some value 9:Some value", string.Join(" ", parents));
     }
 
     [Fact]

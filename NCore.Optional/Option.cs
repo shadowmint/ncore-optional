@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace NCore.Optional
 {
@@ -12,6 +14,34 @@ namespace NCore.Optional
     public static Option<T> None<T>()
     {
       return new Option<T>();
+    }
+
+    public static T FirstOrDefault<T>(T fallback, params Func<Option<T>>[] possibleResolvers)
+    {
+      foreach (var possibleResolver in possibleResolvers)
+      {
+        var result = possibleResolver();
+        if (result)
+        {
+          return result.Unwrap(default(T));
+        }
+      }
+
+      return fallback;
+    }
+
+    public static async Task<T> FirstOrDefaultAsync<T>(T fallback, params Func<Task<Option<T>>>[] possibleResolvers)
+    {
+      foreach (var possibleResolver in possibleResolvers)
+      {
+        var result = await possibleResolver();
+        if (result)
+        {
+          return result.Unwrap(default(T));
+        }
+      }
+
+      return fallback;
     }
   }
 
@@ -40,6 +70,22 @@ namespace NCore.Optional
     public T Unwrap(Func<T> fallback)
     {
       return Some ? _value : fallback();
+    }
+
+    /// <summary>
+    /// Async version of unwrap  
+    /// </summary>
+    public Task<T> UnwrapAsync(Func<Task<T>> fallback)
+    {
+      return Some ? Task.FromResult(_value) : fallback();
+    }
+
+    /// <summary>
+    /// Async version of unwrap  
+    /// </summary>
+    public Task<T> UnwrapAsync(Task<T> fallback)
+    {
+      return Some ? Task.FromResult(_value) : fallback;
     }
 
     public static bool operator true(Option<T> option)

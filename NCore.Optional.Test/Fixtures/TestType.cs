@@ -1,6 +1,4 @@
-﻿using NCore.Optional;
-
-namespace NCore.OptionalTests.Fixtures
+﻿namespace NCore.Optional.Test.Fixtures
 {
   public class TestType
   {
