@@ -18,7 +18,7 @@ A generic Option type for C#
         return $"{Id}:{value}";
       }
     }
-        
+
     var collection = new List<TestType>();
     for (var i = 0; i < 10; i++)
     {
@@ -68,7 +68,7 @@ Now add the `NuGet.Config` to the project folder:
     <?xml version="1.0" encoding="utf-8"?>
     <configuration>
      <packageSources>
-        <add key="local" value="./packages" />
+        <add key="local" value="./_packages" />
      </packageSources>
     </configuration>
 

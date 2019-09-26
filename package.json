@@ -1,6 +1,6 @@
 {
   "name": "NCore.Optional",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Optional type for C#",
   "main": "index.js",
   "files": [
@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "test": "dotnet build && cd NCore.Optional.Test && dotnet test",
-    "build": "dotnet clean && dotnet build && dotnet pack --include-symbols --include-source && rm -f lib/*.nupkg && find NCore.Optional/* -name *.nupkg | xargs -I files cp files lib",
+    "build": "rm -f lib/* && dotnet clean && dotnet build && cd NCore.Optional && dotnet pack -c Release --include-symbols --include-source -o ../lib",
     "postinstall": "node scripts/postinstall.js"
   },
   "author": "",
